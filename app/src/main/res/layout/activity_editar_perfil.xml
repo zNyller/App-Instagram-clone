@@ -26,7 +26,7 @@
         android:id="@+id/textAlterarFoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alterar foto"
+        android:text="@string/alterar_foto"
         android:textColor="@color/azul"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -52,9 +52,9 @@
             android:id="@+id/editNomePerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_person"
+            android:drawableStart="@drawable/ic_baseline_person"
             android:drawablePadding="5dp"
-            android:hint="Nome de usuário"
+            android:hint="@string/nome_usuario"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,9 +73,9 @@
             android:id="@+id/editEmailPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_email_24"
+            android:drawableStart="@drawable/ic_baseline_email_24"
             android:drawablePadding="5dp"
-            android:hint="E-mail"
+            android:hint="@string/e_mail"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:text="Salvar alterações"
+        android:text="@string/salvar_alteracoes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

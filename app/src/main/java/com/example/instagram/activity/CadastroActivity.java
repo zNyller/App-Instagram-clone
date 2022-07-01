@@ -77,7 +77,7 @@ public class CadastroActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
-                    String idUsuario = Base64Custom.codificarBase64(usuario.getEmail());
+                    String idUsuario = task.getResult().getUser().getUid();
                     usuario.setIdUsuario(idUsuario);
                     usuario.salvar();
 

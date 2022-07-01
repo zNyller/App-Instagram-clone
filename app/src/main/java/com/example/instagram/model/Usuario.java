@@ -2,6 +2,7 @@ package com.example.instagram.model;
 
 import com.example.instagram.helper.ConfigFirebase;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 
@@ -13,7 +14,7 @@ public class Usuario implements Serializable {
 
     public void salvar(){
         DatabaseReference firebase = ConfigFirebase.getDatabase();
-        firebase.child("usuarios").child(this.idUsuario).setValue(this);
+        firebase.child("usuarios").child(getIdUsuario()).setValue(this);
     }
 
     public String getNome() {
@@ -32,6 +33,7 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    @Exclude
     public String getSenha() {
         return senha;
     }

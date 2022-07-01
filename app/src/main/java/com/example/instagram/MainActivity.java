@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.viewPager, new FeedFragment()).commit();
 
-
     }
 
     public void configNavigationBottom(){

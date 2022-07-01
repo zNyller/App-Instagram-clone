@@ -15,6 +15,7 @@ import com.example.instagram.MainActivity;
 import com.example.instagram.R;
 import com.example.instagram.helper.Base64Custom;
 import com.example.instagram.helper.ConfigFirebase;
+import com.example.instagram.helper.UsuarioFirebase;
 import com.example.instagram.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -77,9 +78,14 @@ public class CadastroActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
+
+                    // Salvar dados no Firebase
                     String idUsuario = task.getResult().getUser().getUid();
                     usuario.setIdUsuario(idUsuario);
                     usuario.salvar();
+
+                    // Salvar dados no profile do Firebase (Authentication)
+                    UsuarioFirebase.atualizarNomeUsuario( usuario.getNome() );
 
                     startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                     finish();

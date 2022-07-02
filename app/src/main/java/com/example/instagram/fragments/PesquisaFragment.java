@@ -21,6 +21,7 @@ import com.example.instagram.activity.PerfilAmigoActivity;
 import com.example.instagram.adapter.AdapterPesquisa;
 import com.example.instagram.helper.ConfigFirebase;
 import com.example.instagram.helper.RecyclerItemClickListener;
+import com.example.instagram.helper.UsuarioFirebase;
 import com.example.instagram.model.Usuario;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +41,8 @@ public class PesquisaFragment extends Fragment {
     private List<Usuario> listaUsuarios;
     private DatabaseReference databaseRef;
 
+    private String idUsuarioLogado;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,7 @@ public class PesquisaFragment extends Fragment {
 
         searchViewPesquisa = view.findViewById(R.id.searchViewPesquisa);
         recyclerPesquisa = view.findViewById(R.id.recyclerPesquisa);
+        idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
 
         // Configs iniciais
         listaUsuarios = new ArrayList<>();
@@ -124,7 +128,13 @@ public class PesquisaFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) { // Percorrer a lista de itens
                     listaUsuarios.clear();
                     for (DataSnapshot ds: snapshot.getChildren()){
-                        listaUsuarios.add( ds.getValue(Usuario.class) );
+                        // Verifica se é o usuario logado e remove da lista
+                        Usuario usuario = ds.getValue(Usuario.class);
+                        if ( idUsuarioLogado.equals(usuario.getIdUsuario() ) )
+                            continue;
+
+                        // Adiciona usuarios na lista
+                        listaUsuarios.add( usuario );
                     }
                     adapterPesquisa.notifyDataSetChanged(); // Notificar o adapter
                 }

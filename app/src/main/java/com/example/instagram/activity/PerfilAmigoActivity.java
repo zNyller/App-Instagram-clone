@@ -82,7 +82,6 @@ public class PerfilAmigoActivity extends AppCompatActivity {
                         .load(uri).into(imagePerfil);
 
             }
-
         }
     }
 
@@ -121,7 +120,6 @@ public class PerfilAmigoActivity extends AppCompatActivity {
                     salvarSeguidor(usuarioAtual, usuarioSelecionado);
                 }
             });
-
         }
     }
 
@@ -141,9 +139,23 @@ public class PerfilAmigoActivity extends AppCompatActivity {
         // Alterar botão ação para seguindo
         buttonAcaoPerfil.setText("Seguindo");
         buttonAcaoPerfil.setOnClickListener(null);
+
+        // Atualizar numero "Seguindo" do usuario atual
+        int seguindo = userAtual.getSeguindo() + 1;
+        HashMap<String, Object> dadosSeguindo = new HashMap<>();
+        dadosSeguindo.put("seguindo", seguindo);
+        DatabaseReference usuarioSeguindo = usuariosRef
+                .child( userAtual.getIdUsuario() );
+        usuarioSeguindo.updateChildren( dadosSeguindo );
+
+        // Atualizar numero "Seguidores" do usuario selecionado
+        int seguidores = userSelecionado.getSeguidores() + 1;
+        HashMap<String, Object> dadosSeguidores = new HashMap<>();
+        dadosSeguidores.put("seguidores", seguidores);
+        DatabaseReference usuarioSeguidores = usuariosRef
+                .child( userSelecionado.getIdUsuario() );
+        usuarioSeguidores.updateChildren( dadosSeguidores );
     }
-
-
 
     private void recuperarDadosUsuarioAtual(){
         usuarioAtualRef = usuariosRef.child(idUsuarioLogado);
@@ -192,7 +204,6 @@ public class PerfilAmigoActivity extends AppCompatActivity {
                 textPublicacoes.setText(publicacoes);
                 textSeguidores.setText(seguidores);
                 textSeguindo.setText(seguindo);
-
             }
 
             @Override

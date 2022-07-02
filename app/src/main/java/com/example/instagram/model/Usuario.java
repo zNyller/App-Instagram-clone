@@ -10,6 +10,9 @@ import java.util.Map;
 
 public class Usuario implements Serializable {
     private String nome, email, senha, idUsuario, caminhoFoto;
+    private int publicacoes = 0;
+    private int seguidores = 0;
+    private int seguindo = 0;
 
     public Usuario() {
     }
@@ -36,8 +39,35 @@ public class Usuario implements Serializable {
         usuarioMap.put("nome", getNome());
         usuarioMap.put("idUsuario", getIdUsuario());
         usuarioMap.put("caminhoFoto", getCaminhoFoto());
+        usuarioMap.put("publicacoes", getPublicacoes());
+        usuarioMap.put("seguidores", getSeguidores());
+        usuarioMap.put("seguindo", getSeguindo());
 
         return usuarioMap;
+    }
+
+    public int getPublicacoes() {
+        return publicacoes;
+    }
+
+    public void setPublicacoes(int publicacoes) {
+        this.publicacoes = publicacoes;
+    }
+
+    public int getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(int seguidores) {
+        this.seguidores = seguidores;
+    }
+
+    public int getSeguindo() {
+        return seguindo;
+    }
+
+    public void setSeguindo(int seguindo) {
+        this.seguindo = seguindo;
     }
 
     public String getNome() {

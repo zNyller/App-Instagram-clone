@@ -1,5 +1,6 @@
 package com.example.instagram.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.example.instagram.R;
+import com.example.instagram.activity.PerfilAmigoActivity;
 import com.example.instagram.adapter.AdapterPesquisa;
 import com.example.instagram.helper.ConfigFirebase;
+import com.example.instagram.helper.RecyclerItemClickListener;
 import com.example.instagram.model.Usuario;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -81,6 +85,29 @@ public class PesquisaFragment extends Fragment {
         recyclerPesquisa.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayout.VERTICAL));
 
         recyclerPesquisa.setAdapter(adapterPesquisa);
+
+        // Evento de clique RecyclerView
+        recyclerPesquisa.addOnItemTouchListener( new RecyclerItemClickListener(
+                getActivity(), recyclerPesquisa, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Usuario usuarioSelecionado = listaUsuarios.get(position);
+                Intent i = new Intent(getActivity(), PerfilAmigoActivity.class);
+                i.putExtra("usuarioSelecionado", usuarioSelecionado); // Setta os dados antes da abertura da Activity
+                startActivity(i);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        }
+        ));
 
         return view;
     }

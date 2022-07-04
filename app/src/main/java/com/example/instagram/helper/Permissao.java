@@ -2,6 +2,7 @@ package com.example.instagram.helper;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
 import androidx.core.app.ActivityCompat;
@@ -19,7 +20,9 @@ public class Permissao {
             /* Percorre as permissões passadas, verificando
             uma a uma se já tem a permissão liberada */
             for (String permissao : permissoes){
-                ContextCompat.checkSelfPermission(activity, permissao);
+                Boolean temPermissao = ContextCompat.checkSelfPermission(
+                        activity, permissao) == PackageManager.PERMISSION_GRANTED;
+                if (!temPermissao) listaPermissoes.add(permissao);
             }
             // Caso a lista esteja vazia, não é necessário solicitar permissão
             if (listaPermissoes.isEmpty()) return true;

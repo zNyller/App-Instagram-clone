@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.instagram.R;
 import com.example.instagram.helper.ConfigFirebase;
+import com.example.instagram.helper.Permissao;
 import com.example.instagram.helper.UsuarioFirebase;
 import com.example.instagram.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +47,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private Usuario usuarioLogado;
 
     private String[] permissoes = new String[]{
-            Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE
     };
     private static final int SELECAO_GALERIA = 20;
     private StorageReference storageReference;
@@ -68,6 +69,9 @@ public class EditarPerfilActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
+
+        // Validar permissões
+        Permissao.validarPermissoes(permissoes, this, 1);
 
         // Recuperar dados do usuário na activity
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();

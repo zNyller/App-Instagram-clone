@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -54,6 +56,7 @@ public class PerfilAmigoActivity extends AppCompatActivity {
     private ValueEventListener valueEventListenerPerfilAmigo;
 
     private String idUsuarioLogado;
+    private List<Postagem> postagens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +86,7 @@ public class PerfilAmigoActivity extends AppCompatActivity {
 
         // Recuperar usuario selecionado
         Bundle bundle = getIntent().getExtras();
-        if ( bundle != null ){
+        if (bundle != null) {
             usuarioSelecionado = (Usuario) bundle.getSerializable("usuarioSelecionado");
 
             // Configura referencia postagens usuario
@@ -92,11 +95,11 @@ public class PerfilAmigoActivity extends AppCompatActivity {
                     .child(usuarioSelecionado.getIdUsuario());
 
             // Configura nome do usuario na Toolbar
-            getSupportActionBar().setTitle( usuarioSelecionado.getNome() );
+            getSupportActionBar().setTitle(usuarioSelecionado.getNome());
 
             // Recuperar foto do usuario
             String caminhoFoto = usuarioSelecionado.getCaminhoFoto();
-            if (caminhoFoto != null){
+            if (caminhoFoto != null) {
                 Uri uri = Uri.parse(caminhoFoto);
                 Glide.with(PerfilAmigoActivity.this)
                         .load(uri).into(imagePerfil);
@@ -107,6 +110,18 @@ public class PerfilAmigoActivity extends AppCompatActivity {
 
         // Carrega as fotos das postagens de um usuário
         carregarPostagens();
+
+        // Abrir foto clicada
+        gridPerfil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Postagem postagem = postagens.get(i);
+                Intent intent = new Intent(getApplicationContext(), VisualizarPostActivity.class);
+                intent.putExtra("postagem", postagem);
+                intent.putExtra("usuario", usuarioSelecionado);
+                startActivity(intent);
+            }
+        });
     }
 
     public void inicializarImageLoader(){
@@ -194,6 +209,7 @@ public class PerfilAmigoActivity extends AppCompatActivity {
 
     public void carregarPostagens(){
         // Recupera as fotos postadas pelo usuario
+        postagens = new ArrayList<>();
         postagensUsuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -205,10 +221,9 @@ public class PerfilAmigoActivity extends AppCompatActivity {
                 List<String> urlFotos = new ArrayList<>();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                     Postagem postagem = dataSnapshot.getValue(Postagem.class);
+                    postagens.add(postagem);
                     urlFotos.add(postagem.getCaminhoFoto());
                 }
-                int qtdPostagens = urlFotos.size();
-                textPublicacoes.setText(String.valueOf(qtdPostagens));
 
                 // Configurar adapter GridView
                 adapterGrid = new AdapterGrid(getApplicationContext(), R.layout.grid_postagem, urlFotos);
@@ -263,11 +278,11 @@ public class PerfilAmigoActivity extends AppCompatActivity {
                 Usuario usuario = snapshot.getValue(Usuario.class);
 
                 // Configurar os valores
-                //String publicacoes = String.valueOf(usuario.getPublicacoes());
+                String publicacoes = String.valueOf(usuario.getPublicacoes());
                 String seguidores = String.valueOf(usuario.getSeguidores());
                 String seguindo = String.valueOf(usuario.getSeguindo());
 
-                //textPublicacoes.setText(publicacoes);
+                textPublicacoes.setText(publicacoes);
                 textSeguidores.setText(seguidores);
                 textSeguindo.setText(seguindo);
             }

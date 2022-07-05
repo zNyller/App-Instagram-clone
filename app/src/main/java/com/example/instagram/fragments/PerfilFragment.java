@@ -133,12 +133,12 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Recupera dados do usuario logado
-                Usuario usuario = snapshot.getValue(Usuario.class);
+                usuarioAtual = snapshot.getValue(Usuario.class);
 
                 // Configurar os valores
                 //String publicacoes = String.valueOf(usuario.getPublicacoes());
-                String seguidores = String.valueOf(usuario.getSeguidores());
-                String seguindo = String.valueOf(usuario.getSeguindo());
+                String seguidores = String.valueOf(usuarioAtual.getSeguidores());
+                String seguindo = String.valueOf(usuarioAtual.getSeguindo());
 
                 //textPublicacoes.setText(publicacoes);
                 textSeguidores.setText(seguidores);

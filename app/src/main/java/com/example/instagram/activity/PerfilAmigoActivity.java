@@ -100,7 +100,6 @@ public class PerfilAmigoActivity extends AppCompatActivity {
                 Uri uri = Uri.parse(caminhoFoto);
                 Glide.with(PerfilAmigoActivity.this)
                         .load(uri).into(imagePerfil);
-
             }
         }
 

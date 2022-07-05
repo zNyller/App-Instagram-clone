@@ -23,12 +23,6 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/padrao" />
 
-        <ProgressBar
-            android:id="@+id/progressBarPost"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

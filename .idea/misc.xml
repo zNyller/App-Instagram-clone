@@ -6,6 +6,9 @@
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/drawable/background_botao.xml" value="0.176" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/drawable/background_degrade.xml" value="0.176" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/drawable/borda_text_box.xml" value="0.176" />
+        <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/drawable/ic_baseline_chat_bubble_24.xml" value="0.1865" />
+        <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.1865" />
+        <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1865" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/activity_cadastro.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/activity_editar_perfil.xml" value="0.25" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/activity_filtro.xml" value="0.23958333333333334" />
@@ -13,12 +16,14 @@
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/activity_main.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/activity_perfil_amigo.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/activity_visualizar_post.xml" value="0.16" />
+        <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/adapter_feed.xml" value="0.18" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/adapter_pesquisa.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/fragment_feed.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/fragment_perfil.xml" value="0.25" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/fragment_pesquisa.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/fragment_postagem.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/grid_postagem.xml" value="0.20087719298245615" />
+        <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/loading.xml" value="0.15902777777777777" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/navigation_bottom.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/layout/toolbar.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/edusa/AndroidStudioProjects/Instagram/app/src/main/res/menu/menu_filtro.xml" value="0.22" />

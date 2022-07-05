@@ -48,6 +48,7 @@ dependencies {
 
     // Loader de imagens para GridView
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
 }
 
 apply plugin: 'com.android.application'

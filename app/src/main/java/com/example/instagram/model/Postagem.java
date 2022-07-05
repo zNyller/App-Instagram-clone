@@ -1,9 +1,13 @@
 package com.example.instagram.model;
 
 import com.example.instagram.helper.ConfigFirebase;
+import com.example.instagram.helper.UsuarioFirebase;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Postagem implements Serializable {
     private String idPost, idUsuario, descricao, caminhoFoto;
@@ -16,13 +20,32 @@ public class Postagem implements Serializable {
         setIdPost(idPostagem);
     }
 
-    public boolean salvar(){
+    public boolean salvar(DataSnapshot seguidoresSnapshot){
+        Map objeto = new HashMap();
+        Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioAtual();
+
         DatabaseReference firebaseRef = ConfigFirebase.getDatabase();
-        DatabaseReference postagensRef = firebaseRef
-                .child("postagens")
-                .child(getIdUsuario())
-                .child(getIdPost());
-        postagensRef.setValue(this);
+        // Referência para postagem (Salva a postagem dentro do nó postagens)
+        String comboId = "/" + getIdUsuario() + "/" + getIdPost();
+        objeto.put("/postagens" + comboId, this);
+
+        // Referência para o feed (Salva a postagem dentro do feed)
+        for (DataSnapshot seguidores: seguidoresSnapshot.getChildren()){
+            String idSeguidor = seguidores.getKey();
+
+            // Monta objeto para salvar
+            HashMap<String, Object> dadosSeguidor = new HashMap<>();
+            dadosSeguidor.put("fotoPostagem", getCaminhoFoto());
+            dadosSeguidor.put("descricao", getDescricao());
+            dadosSeguidor.put("idPost", getIdPost());
+            dadosSeguidor.put("nomeUsuario", usuarioLogado.getNome());
+            dadosSeguidor.put("fotoUsuario", usuarioLogado.getCaminhoFoto());
+
+            String idsAtualizacao = "/" + idSeguidor + "/" + getIdPost();
+            objeto.put("/feed" + idsAtualizacao, dadosSeguidor);
+        }
+
+        firebaseRef.updateChildren( objeto );
 
         return true;
     }

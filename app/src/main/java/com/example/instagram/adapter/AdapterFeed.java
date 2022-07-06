@@ -13,7 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.R;
+import com.example.instagram.helper.ConfigFirebase;
+import com.example.instagram.helper.UsuarioFirebase;
 import com.example.instagram.model.Feed;
+import com.example.instagram.model.PostagensCurtidas;
+import com.example.instagram.model.Usuario;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -40,6 +48,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Feed feed = listafeed.get(position);
+        Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioAtual();
 
         // Carrega dados do feed
         if ( feed.getFotoPost() != null){
@@ -53,6 +62,51 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         Glide.with(context).load(uriFotoPerfil).into(holder.fotoPerfil);
         holder.descricao.setText(feed.getDescricao());
         holder.nome.setText(feed.getNomeUsuario());
+
+        // Recuperar dados da postagem curtida
+        DatabaseReference curtidasRef = ConfigFirebase.getDatabase()
+                .child("postagens-curtidas")
+                .child( "idPostagem" ) ;
+        curtidasRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int qtdCurtidas = 0;
+                // Checar se o nó qtdCurtidas já existe
+                if (snapshot.hasChild("qtdCurtidas")){
+                    // Recuperar a quantidade de postagens
+                    PostagensCurtidas postagensCurtidas = snapshot.getValue(PostagensCurtidas.class);
+                    qtdCurtidas = postagensCurtidas.getQtdCurtidas();
+                }
+
+                // Verifica se já foi curtido
+                if (snapshot.hasChild( usuarioLogado.getIdUsuario()) ){
+                    holder.like.setClickable(false);
+                }else {
+                    holder.like.setClickable(true);
+                }
+
+                // Monta o objeto postagem curtida para o Firebase
+                final PostagensCurtidas curtidas = new PostagensCurtidas();
+                curtidas.setFeed( feed ); // Recuperar os dados das publicações
+                curtidas.setUsuario( usuarioLogado ); // Recuperar os dados do usuario logado
+                curtidas.setQtdCurtidas( qtdCurtidas );
+
+                holder.like.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        curtidas.salvar();
+                        holder.qtdCurtidas.setText( curtidas.getQtdCurtidas() + " curtidas ");
+                    }
+                });
+                holder.qtdCurtidas.setText( curtidas.getQtdCurtidas() + " curtidas ");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override

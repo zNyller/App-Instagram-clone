@@ -24,12 +24,11 @@ public class Usuario implements Serializable {
 
     public void atualizar(){
         DatabaseReference firebaseRef = ConfigFirebase.getDatabase();
-        DatabaseReference usuariosRef = firebaseRef
-                .child("usuarios")
-                .child( getIdUsuario() );
+        Map objeto = new HashMap();
+        objeto.put("/usuarios/" + getIdUsuario() + "/nome", getNome());
+        objeto.put("/usuarios/" + getIdUsuario() + "/caminhoFoto", getCaminhoFoto());
 
-        Map<String, Object> dadosUsuario = converterParaMap();
-        usuariosRef.updateChildren(dadosUsuario);
+        firebaseRef.updateChildren( objeto );
 
     }
 

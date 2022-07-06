@@ -88,14 +88,6 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        // Recuperar foto do usuario
-        String caminhoFoto = usuarioAtual.getCaminhoFoto();
-        if (caminhoFoto != null) {
-            Uri uri = Uri.parse(caminhoFoto);
-            Glide.with(getActivity())
-                    .load(uri).into(imagePerfil);
-        }
-
         inicializarImageLoader();
 
         // Carrega as fotos das postagens de um usuário
@@ -108,6 +100,16 @@ public class PerfilFragment extends Fragment {
     public void onStart() {
         super.onStart();
         recuperarDadosPerfilUsuario();
+
+        usuarioAtual = UsuarioFirebase.getDadosUsuarioAtual();
+
+        // Recuperar foto do usuario
+        String caminhoFoto = usuarioAtual.getCaminhoFoto();
+        if (caminhoFoto != null) {
+            Uri uri = Uri.parse(caminhoFoto);
+            Glide.with(getActivity())
+                    .load(uri).into(imagePerfil);
+        }
     }
 
     @Override
@@ -136,11 +138,11 @@ public class PerfilFragment extends Fragment {
                 usuarioAtual = snapshot.getValue(Usuario.class);
 
                 // Configurar os valores
-                //String publicacoes = String.valueOf(usuario.getPublicacoes());
+                String publicacoes = String.valueOf(usuarioAtual.getPublicacoes());
                 String seguidores = String.valueOf(usuarioAtual.getSeguidores());
                 String seguindo = String.valueOf(usuarioAtual.getSeguindo());
 
-                //textPublicacoes.setText(publicacoes);
+                textPublicacoes.setText(publicacoes);
                 textSeguidores.setText(seguidores);
                 textSeguindo.setText(seguindo);
             }
@@ -167,8 +169,6 @@ public class PerfilFragment extends Fragment {
                     Postagem postagem = dataSnapshot.getValue(Postagem.class);
                     urlFotos.add(postagem.getCaminhoFoto());
                 }
-                int qtdPostagens = urlFotos.size();
-                textPublicacoes.setText(String.valueOf(qtdPostagens));
 
                 // Configurar adapter GridView
                 adapterGrid = new AdapterGrid(getActivity(), R.layout.grid_postagem, urlFotos);
